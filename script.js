@@ -8,19 +8,24 @@ window.onload = function () {
   let snake;
   let apple;
   let canvas;
+  let widthInBlocks = canvasWidth / blockSize;
+  let heightInBlocks = canvasHeight / blockSize;
+  let score = 0;
+  let gameInProgress = true; 
 
   // Classe Snake pour représenter le serpent
   class Snake {
     constructor(body, direction) {
       this.body = body;
       this.direction = direction;
+      this.ateApple = false;
     }
 
     // Méthode pour dessiner le serpent sur le canvas
     draw() {
       ctx.save();
       ctx.fillStyle = "#8388EF";
-      this.body.forEach(position => this.drawBlock(position));
+      this.body.forEach((position) => this.drawBlock(position));
       ctx.restore();
     }
 
@@ -35,7 +40,11 @@ window.onload = function () {
     advance() {
       const nextPosition = this.getNextPosition();
       this.body.unshift(nextPosition);
-      this.body.pop();
+      if (!this.ateApple) {
+        this.body.pop();
+      } else {
+        this.ateApple = false;
+      }
     }
 
     // Méthode pour obtenir la prochaine position du serpent en fonction de sa direction
@@ -67,7 +76,7 @@ window.onload = function () {
         left: ["up", "down"],
         right: ["up", "down"],
         up: ["left", "right"],
-        down: ["left", "right"]
+        down: ["left", "right"],
       };
 
       if (allowedDirections[this.direction].includes(newDirection)) {
@@ -99,8 +108,15 @@ window.onload = function () {
           return true;
         }
       }
-
       return false;
+    }
+
+    // Méthode pour vérifier si le serpent mange la pomme
+    isEatingApple(appleToEat) {
+      const head = this.body[0];
+      return (
+        head[0] === appleToEat.position[0] && head[1] === appleToEat.position[1]
+      );
     }
   }
 
@@ -117,9 +133,35 @@ window.onload = function () {
       ctx.save();
       ctx.fillStyle = "#B6D173";
       ctx.beginPath();
-      ctx.arc(x * blockSize + radius, y * blockSize + radius, radius, 0, Math.PI * 2);
+      ctx.arc(
+        x * blockSize + radius,
+        y * blockSize + radius,
+        radius,
+        0,
+        Math.PI * 2
+      );
       ctx.fill();
       ctx.restore();
+    }
+
+    // Méthode pour repositionner la pomme
+    setNewPosition() {
+      const newX = Math.floor(Math.random() * widthInBlocks);
+      const newY = Math.floor(Math.random() * heightInBlocks);
+      this.position = [newX, newY];
+    }
+
+    // Méthode pour vérifier si la pomme est sur le serpent
+    isOnSnake(snakeToCheck) {
+      for (let i = 0; i < snakeToCheck.body.length; i++) {
+        if (
+          this.position[0] === snakeToCheck.body[i][0] &&
+          this.position[1] === snakeToCheck.body[i][1]
+        ) {
+          return true;
+        }
+      }
+      return false;
     }
   }
 
@@ -128,7 +170,10 @@ window.onload = function () {
     canvas = document.createElement("canvas");
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
-    canvas.style.border = "1px solid";
+    canvas.style.border = "25px solid";
+    canvas.style.margin = "50px auto";
+    canvas.style.display = "block";
+    canvas.style.backgroundColor = "#ddd";
     document.body.appendChild(canvas);
     ctx = canvas.getContext("2d");
 
@@ -137,12 +182,15 @@ window.onload = function () {
         [6, 4],
         [5, 4],
         [4, 4],
+        [3, 4],
+        [2, 4],
       ],
       "right"
     );
 
     apple = new Apple([10, 10]);
-
+    score = 0;
+    gameInProgress = true;
     refreshCanvas();
   }
 
@@ -150,13 +198,67 @@ window.onload = function () {
   function refreshCanvas() {
     snake.advance();
     if (snake.checkCollision()) {
-      alert("Game Over");
+      gameOver();
     } else {
+      if (snake.isEatingApple(apple)) {
+        score++;
+        snake.ateApple = true;
+        do {
+          apple.setNewPosition();
+        } while (apple.isOnSnake(snake));
+      }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       snake.draw();
       apple.draw();
-      setTimeout(refreshCanvas, delay);
+      drawScore();
+      if (gameInProgress) {
+        setTimeout(refreshCanvas, delay);
+      }
     }
+  }
+
+  // Fonction pour gérer la fin de partie
+  function gameOver() {
+    ctx.save();
+    ctx.fillStyle = "#9D5991";
+    ctx.font = "bold 40px sans-serif";
+    ctx.fillText("Game Over", canvasWidth / 2 - 100, canvasHeight / 2);
+    ctx.font = "bold 20px sans-serif";
+    ctx.fillText(
+      "Appuyer sur la touche Espace pour rejouer",
+      canvasWidth / 2 - 170,
+      canvasHeight / 2 + 30
+    );
+    ctx.restore();
+    gameInProgress = false;
+  }
+
+  // Fonction pour redémarrer le jeu
+  function restart() {
+    snake = new Snake(
+      [
+        [6, 4],
+        [5, 4],
+        [4, 4],
+        [3, 4],
+        [2, 4],
+      ],
+      "right"
+    );
+
+    apple = new Apple([10, 10]);
+    score = 0;
+    gameInProgress = true;
+    refreshCanvas();
+  }
+
+  // Fonction pour afficher le score
+  function drawScore() {
+    ctx.save();
+    ctx.fillStyle = "black";
+    ctx.font = "bold 20px sans-serif";
+    ctx.fillText("Score: " + score, 15, canvasHeight - 15);
+    ctx.restore();
   }
 
   // Écouteur d'événement pour détecter les touches de clavier et changer la direction du serpent
@@ -176,6 +278,11 @@ window.onload = function () {
       case "ArrowDown":
         newDirection = "down";
         break;
+      case " ":
+        if (!gameInProgress) {
+          restart();
+        }
+        return;
       default:
         return;
     }
