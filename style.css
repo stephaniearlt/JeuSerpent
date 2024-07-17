@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    color: #333;
+}
+
+.instructions {
+    max-width: 1200px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.instructions h2 {
+    color: #555;
+}
+
+.instructions ul {
+    padding: 0;
+}
+
+.instructions li {
+    margin: 15px;
+}
+
+canvas {
+    border: 1px solid #333;
+}
