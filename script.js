@@ -167,14 +167,7 @@ window.onload = function () {
 
   // Fonction d'initialisation du jeu
   function init() {
-    canvas = document.createElement("canvas");
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
-    canvas.style.border = "25px solid";
-    canvas.style.margin = "50px auto";
-    canvas.style.display = "block";
-    canvas.style.backgroundColor = "#ddd";
-    document.body.appendChild(canvas);
+    canvas = document.getElementById("gameCanvas");
     ctx = canvas.getContext("2d");
 
     snake = new Snake(
@@ -257,7 +250,7 @@ window.onload = function () {
     ctx.save();
     ctx.fillStyle = "black";
     ctx.font = "bold 20px sans-serif";
-    ctx.fillText("Score: " + score, 15, canvasHeight - 15);
+    ctx.fillText("Score: " + score, 15, canvas.height - 15);
     ctx.restore();
   }
 

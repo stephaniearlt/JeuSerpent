@@ -7,44 +7,46 @@
 
   <body>
     <h1>Jeu du Serpent</h1>
-    <div class="instructions">
-      <h2>Comment Jouer</h2>
-      <p>Le jeu démarre automatiquement.</p>
-      <h2>Contrôler le Serpent :</h2>
-      <ul>
-        Utilisez les flèches directionnelles de votre clavier pour déplacer le
-        serpent :
-        <li>Flèche gauche : déplace le serpent vers la gauche.</li>
-        <li>Flèche droite : déplace le serpent vers la droite.</li>
-        <li>Flèche haut : déplace le serpent vers le haut.</li>
-        <li>Flèche bas : déplace le serpent vers le bas.</li>
-      </ul>
-      <h2>Objectif :</h2>
-      <p>
-        Le but est de manger les pommes (petits cercles verts) qui apparaissent
-        sur le canevas.
-      </p>
-      <p>
-        Chaque pomme mangée fait grandir le serpent et augmente votre score de 1
-        point.
-      </p>
-
-      <p>Le score actuel est affiché en bas du canevas.</p>
-      <h2>Éviter les Collisions :</h2>
-      <p>
-        Évitez de heurter les murs du canevas ou le corps du serpent lui-même.
-        Si cela se produit, le jeu se termine.
-      </p>
-      <h2>Game Over :</h2>
-      <p>
-        Lorsque le serpent entre en collision avec un mur ou son propre corps,
-        un message "Game Over" s'affiche.
-      </p>
-      <p>
-        Pour rejouer, appuyez sur la touche Espace du clavier. Le jeu
-        redémarrera avec un score remis à zéro.
-      </p>
+    <div class="game-container">
+      <div class="instructions">
+        <h2>Comment Jouer</h2>
+        <p>Le jeu démarre automatiquement. Pour le lancer à nouveau, appuyez sur la touche Espace.</p>
+        <h2>Contrôler le Serpent :</h2>
+        <ul>
+          Utilisez les flèches directionnelles de votre clavier pour déplacer le
+          serpent :
+          <li>Flèche gauche : déplace le serpent vers la gauche.</li>
+          <li>Flèche droite : déplace le serpent vers la droite.</li>
+          <li>Flèche haut : déplace le serpent vers le haut.</li>
+          <li>Flèche bas : déplace le serpent vers le bas.</li>
+        </ul>
+        <h2>Objectif :</h2>
+        <p>
+          Le but est de manger les pommes (petits cercles verts) qui apparaissent
+          sur le canevas.
+        </p>
+        <p>
+          Chaque pomme mangée fait grandir le serpent et augmente votre score de 1
+          point.
+        </p>
+        <p>Le score actuel est affiché en bas du canevas.</p>
+        <h2>Éviter les Collisions :</h2>
+        <p>
+          Évitez de heurter les murs du canevas ou le corps du serpent lui-même.
+          Si cela se produit, le jeu se termine.
+        </p>
+        <h2>Game Over :</h2>
+        <p>
+          Lorsque le serpent entre en collision avec un mur ou son propre corps,
+          un message "Game Over" s'affiche.
+        </p>
+        <p>
+          Pour rejouer, appuyez sur la touche Espace du clavier. Le jeu
+          redémarrera avec un score remis à zéro.
+        </p>
+      </div>
+      <canvas id="gameCanvas" width="900" height="600"></canvas>
     </div>
+    <script src="script.js"></script>
   </body>
-  <script src="script.js"></script>
 </html>
