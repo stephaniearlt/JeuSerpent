@@ -11,7 +11,7 @@ window.onload = function () {
   let widthInBlocks = canvasWidth / blockSize;
   let heightInBlocks = canvasHeight / blockSize;
   let score = 0;
-  let gameInProgress = true; 
+  let gameInProgress = false;
 
   // Classe Snake pour représenter le serpent
   class Snake {
@@ -273,7 +273,9 @@ window.onload = function () {
         break;
       case " ":
         if (!gameInProgress) {
-          restart();
+          init(); // Démarre le jeu lors de la première pression sur "espace"
+        } else {
+          restart(); // Redémarre le jeu si une partie est déjà en cours
         }
         return;
       default:
@@ -281,7 +283,5 @@ window.onload = function () {
     }
     snake.setDirection(newDirection);
   };
-
-  // Appel initial pour démarrer le jeu
-  init();
 };
+ 

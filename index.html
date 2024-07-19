@@ -3,14 +3,16 @@
   <head>
     <title>Jeu du Serpent</title>
     <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
 
   <body>
     <h1>Jeu du Serpent</h1>
-    <div class="game-container">
+    <div class="game-container" role="main">
       <div class="instructions">
         <h2>Comment Jouer</h2>
-        <p>Le jeu démarre automatiquement. Pour le lancer à nouveau, appuyez sur la touche Espace.</p>
+        <p>Pour lancer le jeu, appuyez sur la touche Espace.</p>
         <h2>Contrôler le Serpent :</h2>
         <ul>
           Utilisez les flèches directionnelles de votre clavier pour déplacer le
@@ -45,7 +47,7 @@
           redémarrera avec un score remis à zéro.
         </p>
       </div>
-      <canvas id="gameCanvas" width="900" height="600"></canvas>
+      <canvas id="gameCanvas" width="900" height="600" aria-label="Jeu du Serpent"></canvas>
     </div>
     <script src="script.js"></script>
   </body>
