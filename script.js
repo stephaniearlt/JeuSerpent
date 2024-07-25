@@ -12,6 +12,7 @@ window.onload = function () {
   let heightInBlocks = canvasHeight / blockSize;
   let score = 0;
   let gameInProgress = false;
+  let timeoutId;
 
   // Classe Snake pour représenter le serpent
   class Snake {
@@ -205,7 +206,7 @@ window.onload = function () {
       apple.draw();
       drawScore();
       if (gameInProgress) {
-        setTimeout(refreshCanvas, delay);
+        timeoutId = setTimeout(refreshCanvas, delay);
       }
     }
   }
@@ -228,6 +229,7 @@ window.onload = function () {
 
   // Fonction pour redémarrer le jeu
   function restart() {
+    clearTimeout(timeoutId);
     snake = new Snake(
       [
         [6, 4],
@@ -258,6 +260,24 @@ window.onload = function () {
   document.onkeydown = function handleKeyDown(e) {
     const key = e.key;
     let newDirection;
+
+    // Liste des touches autorisées
+    const allowedKeys = [
+      "ArrowLeft",
+      "ArrowUp",
+      "ArrowRight",
+      "ArrowDown",
+      " ",
+    ];
+
+    // Ignorer les touches non autorisées
+    if (!allowedKeys.includes(key)) {
+      return;
+    }
+
+    // Empêchee le comportement par défaut pour les touches autorisées
+    e.preventDefault();
+
     switch (key) {
       case "ArrowLeft":
         newDirection = "left";
@@ -274,8 +294,9 @@ window.onload = function () {
       case " ":
         if (!gameInProgress) {
           init(); // Démarre le jeu lors de la première pression sur "espace"
-        } else {
-          restart(); // Redémarre le jeu si une partie est déjà en cours
+        } else if (!timeoutId) {
+          // Redémarre le jeu seulement si celui-ci est terminé
+          restart();
         }
         return;
       default:
@@ -284,4 +305,3 @@ window.onload = function () {
     snake.setDirection(newDirection);
   };
 };
- 
