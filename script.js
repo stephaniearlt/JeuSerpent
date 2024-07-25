@@ -2,8 +2,8 @@ window.onload = function () {
   const canvasWidth = 900;
   const canvasHeight = 600;
   const blockSize = 30;
-  const delay = 100;
 
+  let delay;
   let ctx;
   let snake;
   let apple;
@@ -170,6 +170,9 @@ window.onload = function () {
   function init() {
     canvas = document.getElementById("gameCanvas");
     ctx = canvas.getContext("2d");
+
+    const modeSelector = document.getElementById("modeSelector");
+    delay = parseInt(modeSelector.value);
 
     snake = new Snake(
       [

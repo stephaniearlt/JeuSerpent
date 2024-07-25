@@ -12,7 +12,14 @@
     <div class="game-container" role="main">
       <div class="instructions">
         <h2>Comment Jouer</h2>
-        <p>Pour lancer le jeu, appuyez sur la touche Espace.</p>
+        <p>Choisissez un mode de jeu :</p>
+        <label for="modeSelector">Mode :</label>
+        <select id="modeSelector">
+          <option value="125">Débutant</option>
+          <option value="100">Intermédiaire</option>
+          <option value="75">Expert</option>
+        </select>
+        <p>Puis lancez le jeu, en appuyant sur la touche Espace.</p>
         <h2>Contrôler le Serpent :</h2>
         <ul>
           Utilisez les flèches directionnelles de votre clavier pour déplacer le
@@ -24,12 +31,12 @@
         </ul>
         <h2>Objectif :</h2>
         <p>
-          Le but est de manger les pommes (petits cercles verts) qui apparaissent
-          sur le canevas.
+          Le but est de manger les pommes (petits cercles verts) qui
+          apparaissent sur le canevas.
         </p>
         <p>
-          Chaque pomme mangée fait grandir le serpent et augmente votre score de 1
-          point.
+          Chaque pomme mangée fait grandir le serpent et augmente votre score de
+          1 point.
         </p>
         <p>Le score actuel est affiché en bas du canevas.</p>
         <h2>Éviter les Collisions :</h2>
@@ -47,7 +54,12 @@
           redémarrera avec un score remis à zéro.
         </p>
       </div>
-      <canvas id="gameCanvas" width="900" height="600" aria-label="Jeu du Serpent"></canvas>
+      <canvas
+        id="gameCanvas"
+        width="900"
+        height="600"
+        aria-label="Jeu du Serpent"
+      ></canvas>
     </div>
     <script src="script.js"></script>
   </body>
